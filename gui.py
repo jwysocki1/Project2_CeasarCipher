@@ -43,7 +43,7 @@ class GUI:
         self.shiftframe.pack(anchor='w', pady=10)  #spinbox can take any integer value, even outside the specified range
 
         self.runframe = Frame(self.window)
-        self.runbutton = Button(self.runframe,text='Run',command=self.mode)   #Button that calls the functions to
+        self.runbutton = Button(self.runframe,text='Run',command=self.run)   #Button that calls the functions to
         self.runbutton.pack()                                                 #manipulate the data
         self.runframe.pack(anchor='center',pady=5)
 
@@ -64,7 +64,7 @@ class GUI:
         else:
             self.openlabel.config(text='File does not exist.')
 
-    def mode(self):
+    def run(self):
         '''
         This function validates the input of the spinbox and calls the functions which encrypt or decrypt the text
         found in "content." It then writes the modified text back into the same file it was pulled from.
@@ -75,8 +75,10 @@ class GUI:
             shift = int(self.shiftspinbox.get())
             if choice == 0 or choice == 1:
                 product = encrypt(GUI.content, shift)
+                self.otherlabel.config(text='File encrypted!')
             elif choice == 2:
                 product = decrypt(GUI.content, shift)
+                self.otherlabel.config(text='File decrypted!')
 
             with open(GUI.file, 'w') as writefile:
                 for x in product:
